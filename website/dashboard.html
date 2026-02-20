@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ZenMind – Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    * { font-family: 'Outfit', sans-serif; }
+    .brand-font { font-family: 'Space Grotesk', sans-serif; }
+  </style>
+</head>
+
+<body class="bg-slate-900 text-white min-h-screen">
+
+<!-- NAVBAR -->
+<nav class="bg-slate-800/80 backdrop-blur border-b border-slate-700/50">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+    <!-- Logo -->
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+        <img src="assets/zenmind-icon.png" class="w-5 h-5" alt="ZenMind">
+      </div>
+      <span class="text-xl font-bold brand-font">ZenMind</span>
+    </div>
+
+    <!-- Right Section -->
+    <div class="flex items-center gap-4">
+
+      <!-- Streak -->
+      <div class="flex items-center gap-2 bg-slate-700/50 px-4 py-2 rounded-xl">
+        🔥 <span class="font-semibold">1</span>
+        <span class="text-slate-400 text-sm">day streak</span>
+      </div>
+
+      <!-- Points -->
+      <div class="flex items-center gap-2 bg-slate-700/50 px-4 py-2 rounded-xl">
+        ⭐ <span class="font-semibold">0</span>
+        <span class="text-slate-400 text-sm">pts</span>
+      </div>
+
+      <!-- Logout -->
+      <button onclick="logout()" title="Logout"
+        class="p-2 rounded-lg hover:bg-slate-700 transition">
+          <div class="stat logout-btn" onclick="logout()">🚪 Logout</div>
+      </button>
+    </div>
+  </div>
+
+<!-- Tabs -->
+<div class="max-w-7xl mx-auto px-6 pb-4 flex gap-2">
+  <a href="dashboard.html"
+   class="px-4 py-2 rounded-lg text-sm font-medium
+          bg-indigo-500/20 text-indigo-400">
+  🎮 Games
+</a>
+
+
+  <a href="progress.html"
+     class="px-4 py-2 rounded-lg text-sm font-medium
+            hover:bg-slate-700/50
+            text-slate-400">
+    📊 Progress
+  </a>
+
+  <a href="leaderboard.html"
+     class="px-4 py-2 rounded-lg text-sm font-medium
+            hover:bg-slate-700/50
+            text-slate-400">
+    🏆 Leaderboard
+  </a>
+
+  <a href="badges.html"
+     class="px-4 py-2 rounded-lg text-sm font-medium
+            hover:bg-slate-700/50
+            text-slate-400">
+    🎖️ Badges
+  </a>
+</div>
+</nav>
+
+<!-- CONTENT -->
+<div class="max-w-7xl mx-auto px-6 py-6">
+
+  <!-- Welcome Banner -->
+  <div class="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-2xl p-6 mb-8 border border-indigo-500/30">
+    <h2 class="text-2xl font-bold mb-1">
+      Welcome, <span id="username" class="text-indigo-400">User</span> 👋
+    </h2>
+    <p class="text-slate-400">
+      Ready to boost your brain power today?
+    </p>
+  </div>
+
+  <!-- Section Title -->
+  <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+    🧠 Brain Boost Games
+  </h3>
+
+  <!-- Game Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+
+    <!-- Memory -->
+    <div onclick="openGame('memory')" class="cursor-pointer bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 hover:-translate-y-1 transition">
+      <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center mb-4 text-2xl">
+        🃏
+      </div>
+      <h4 class="text-lg font-bold mb-1">Memory Cards</h4>
+      <p class="text-slate-400 text-sm mb-4">Match pairs to improve memory speed</p>
+      <div class="flex justify-between items-center">
+        <span class="text-xs text-slate-500">5–10 min</span>
+        <span class="text-xs bg-pink-500/20 text-pink-400 px-2 py-1 rounded-full">+50 pts</span>
+      </div>
+    </div>
+
+    <!-- Math -->
+    <div onclick="openGame('math')" class="cursor-pointer bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 hover:-translate-y-1 transition">
+      <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center mb-4 text-2xl">
+        🔢
+      </div>
+      <h4 class="text-lg font-bold mb-1">Math Sprint</h4>
+      <p class="text-slate-400 text-sm mb-4">Solve equations for quick thinking</p>
+      <div class="flex justify-between items-center">
+        <span class="text-xs text-slate-500">5–10 min</span>
+        <span class="text-xs bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded-full">+50 pts</span>
+      </div>
+    </div>
+
+    <!-- Quiz -->
+    <div onclick="openGame('quiz')" class="cursor-pointer bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 hover:-translate-y-1 transition">
+      <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center mb-4 text-2xl">
+        ❓
+      </div>
+      <h4 class="text-lg font-bold mb-1">Quick Quiz</h4>
+      <p class="text-slate-400 text-sm mb-4">Test knowledge & improve focus</p>
+      <div class="flex justify-between items-center">
+        <span class="text-xs text-slate-500">5–10 min</span>
+        <span class="text-xs bg-amber-500/20 text-amber-400 px-2 py-1 rounded-full">+50 pts</span>
+      </div>
+    </div>
+
+    <!-- Word -->
+    <div onclick="openGame('word')" class="cursor-pointer bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 hover:-translate-y-1 transition">
+      <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center mb-4 text-2xl">
+        📝
+      </div>
+      <h4 class="text-lg font-bold mb-1">Word Puzzle</h4>
+      <p class="text-slate-400 text-sm mb-4">Unscramble words for vocabulary</p>
+      <div class="flex justify-between items-center">
+        <span class="text-xs text-slate-500">5–10 min</span>
+        <span class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full">+50 pts</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Stats -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+    <div class="bg-slate-800/50 rounded-xl p-6 text-center border border-slate-700/50">
+      <div class="text-4xl font-bold text-pink-400">0</div>
+      <p class="text-slate-400 text-sm">Memory Best</p>
+    </div>
+    <div class="bg-slate-800/50 rounded-xl p-6 text-center border border-slate-700/50">
+      <div class="text-4xl font-bold text-cyan-400">0</div>
+      <p class="text-slate-400 text-sm">Math Best</p>
+    </div>
+    <div class="bg-slate-800/50 rounded-xl p-6 text-center border border-slate-700/50">
+      <div class="text-4xl font-bold text-amber-400">0</div>
+      <p class="text-slate-400 text-sm">Quiz Best</p>
+    </div>
+    <div class="bg-slate-800/50 rounded-xl p-6 text-center border border-slate-700/50">
+      <div class="text-4xl font-bold text-emerald-400">0</div>
+      <p class="text-slate-400 text-sm">Word Best</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+  // Read from URL param (set by login page) OR fall back to localStorage
+  const params = new URLSearchParams(window.location.search);
+  const urlUser = params.get("user");
+  const user = urlUser || localStorage.getItem("zenmind_user");
+
+  if (!user) {
+    window.location.replace("index.html");
+  } else {
+    // Always persist to localStorage so other pages can use it
+    localStorage.setItem("zenmind_user", user);
+    document.getElementById("username").innerText = user;
+    // Clean the URL bar
+    if (urlUser) history.replaceState(null, "", "dashboard.html");
+    // Inject username into every nav link so other pages receive it
+    document.querySelectorAll('a[href$=".html"]').forEach(function(a) {
+      var base = a.getAttribute('href').split('?')[0];
+      a.href = base + '?user=' + encodeURIComponent(user);
+    });
+  }
+
+  // Logout
+  function logout() {
+    localStorage.removeItem("zenmind_user");
+    window.location.replace("index.html");
+  }
+
+  // Open a game – passes username so games.html can authenticate
+  function openGame(game) {
+    window.location.href = 'games.html?user=' + encodeURIComponent(user) + '&game=' + game;
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ZenMind – Leaderboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    * { font-family: 'Outfit', sans-serif; }
+    .brand-font { font-family: 'Space Grotesk', sans-serif; }
+  </style>
+</head>
+
+<body class="bg-slate-900 text-white min-h-screen">
+
+<!-- ================= NAVBAR ================= -->
+<nav class="bg-slate-800/80 backdrop-blur border-b border-slate-700/50">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+    <!-- Logo -->
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+        💡
+      </div>
+      <span class="text-xl font-bold brand-font">ZenMind</span>
+    </div>
+
+    <!-- Right -->
+    <div class="flex items-center gap-4">
+      <div class="flex items-center gap-2 bg-slate-700/50 px-4 py-2 rounded-xl">
+        🔥 <span class="font-semibold">1</span>
+        <span class="text-slate-400 text-sm">day streak</span>
+      </div>
+
+      <div class="flex items-center gap-2 bg-slate-700/50 px-4 py-2 rounded-xl">
+        ⭐ <span class="font-semibold">0</span>
+        <span class="text-slate-400 text-sm">pts</span>
+      </div>
+
+      <button onclick="logout()" class="p-2 hover:bg-slate-700 rounded-lg" title="Logout">
+          <div class="stat logout-btn" onclick="logout()">🚪 Logout</div>
+      </button>
+    </div>
+  </div>
+
+<!-- Tabs -->
+<div class="max-w-7xl mx-auto px-6 pb-4 flex gap-2">
+  <a href="dashboard.html"
+     class="px-4 py-2 rounded-lg text-sm font-medium
+            hover:bg-slate-700/50
+            text-slate-400">
+    🎮 Games
+  </a>
+
+  <a href="progress.html"
+     class="px-4 py-2 rounded-lg text-sm font-medium
+            hover:bg-slate-700/50
+            text-slate-400">
+    📊 Progress
+  </a>
+
+  <a href="leaderboard.html"
+   class="px-4 py-2 rounded-lg text-sm font-medium
+          bg-indigo-500/20 text-indigo-400">
+  🏆 Leaderboard
+</a>
+
+<a href="badges.html"
+     class="px-4 py-2 rounded-lg text-sm font-medium
+            hover:bg-slate-700/50
+            text-slate-400">
+    🎖️ Badges
+  </a>
+</div>
+</nav>
+
+<!-- ================= CONTENT ================= -->
+<div class="max-w-7xl mx-auto px-6 py-6">
+
+  <!-- Welcome Banner -->
+  <div class="bg-gradient-to-r from-indigo-500/20 to-purple-500/20
+              rounded-2xl p-6 mb-8 border border-indigo-500/30">
+    <h2 class="text-2xl font-bold mb-1">
+      Welcome, <span id="welcome-user" class="text-indigo-400">User</span> 👋
+    </h2>
+    <p class="text-slate-400">
+      Ready to boost your brain power today?
+    </p>
+  </div>
+
+  <!-- Leaderboard -->
+  <h3 class="text-xl font-bold mb-4">🏆 Leaderboard</h3>
+
+  <div class="bg-slate-800/50 rounded-2xl border border-slate-700/50 overflow-hidden">
+    <table class="w-full">
+      <thead class="bg-slate-800/80 text-slate-400 text-sm">
+        <tr>
+          <th class="p-4 text-left">#</th>
+          <th class="p-4 text-left">Player</th>
+          <th class="p-4 text-center">Level</th>
+          <th class="p-4 text-center">Streak</th>
+          <th class="p-4 text-right">Points</th>
+        </tr>
+      </thead>
+
+      
+    </table>
+  </div>
+
+</div>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const urlUser = params.get("user");
+  const user = urlUser || localStorage.getItem("zenmind_user");
+
+  if (!user) {
+    window.location.replace("index.html");
+  } else {
+    localStorage.setItem("zenmind_user", user);
+    document.getElementById("welcome-user").innerText = user;
+    if (urlUser) history.replaceState(null, "", "leaderboard.html");
+    document.querySelectorAll('a[href$=".html"]').forEach(function(a) {
+      var base = a.getAttribute('href').split('?')[0];
+      a.href = base + '?user=' + encodeURIComponent(user);
+    });
+  }
+
+  function logout() {
+    localStorage.removeItem("zenmind_user");
+    window.location.replace("index.html");
+  }
+
+  /*
+    Later (MongoDB):
+    fetch("http://localhost:5000/api/leaderboard")
+      .then(res => res.json())
+      .then(data => renderLeaderboard(data));
+  */
+</script>
+
+</body>
+</html>

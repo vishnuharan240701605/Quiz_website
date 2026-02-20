@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZenMind – Brain Boost Games</title>
+  <link rel="stylesheet" href="games.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="logo">🧠 ZenMind</div>
+      <button class="back-btn-header" onclick="goToDashboard()">← Dashboard</button>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════════
+       MAIN MENU
+  ══════════════════════════════════════════ -->
+  <div id="main-menu" class="container">
+    <h1>Brain Boost Games</h1>
+    <p class="subtitle">Pick a game to start training your brain!</p>
+
+    <div class="menu-grid">
+
+      <!-- Memory Cards -->
+      <div class="game-card" onclick="showGame('memory-game')">
+        <div class="card-icon icon-pink">🃏</div>
+        <h3>Memory Cards</h3>
+        <p>Match pairs to improve memory speed</p>
+        <span class="pts-badge">+50 pts</span>
+      </div>
+
+      <!-- Math Sprint -->
+      <div class="game-card" onclick="showGame('math-game')">
+        <div class="card-icon icon-cyan">🔢</div>
+        <h3>Math Sprint</h3>
+        <p>Solve equations for quick thinking</p>
+        <span class="pts-badge">+50 pts</span>
+      </div>
+
+      <!-- Quick Quiz -->
+      <div class="game-card" onclick="showGame('quiz-game')">
+        <div class="card-icon icon-amber">❓</div>
+        <h3>Quick Quiz</h3>
+        <p>Test knowledge &amp; improve focus</p>
+        <span class="pts-badge">+50 pts</span>
+      </div>
+
+      <!-- Word Puzzle -->
+      <div class="game-card" onclick="showGame('word-game')">
+        <div class="card-icon icon-green">📝</div>
+        <h3>Word Puzzle</h3>
+        <p>Unscramble words for vocabulary</p>
+        <span class="pts-badge">+50 pts</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       1. MEMORY CARDS
+  ══════════════════════════════════════════ -->
+  <div id="memory-game" class="container hidden">
+
+    <div class="game-header">
+      <button class="back-btn" onclick="showMenu()">← Back</button>
+      <h2>🃏 Memory Cards</h2>
+      <div class="score-display">Pairs: <span id="memory-pairs">0</span> / 8</div>
+    </div>
+
+    <div id="memory-board" class="memory-board"></div>
+
+    <div id="memory-result" class="result-msg hidden">
+      🎉 You Win! All 8 pairs matched!
+    </div>
+
+    <button class="btn btn-primary" onclick="initMemory()">🔄 Restart</button>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       2. MATH SPRINT
+  ══════════════════════════════════════════ -->
+  <div id="math-game" class="container hidden">
+
+    <div class="game-header">
+      <button class="back-btn" onclick="showMenu()">← Back</button>
+      <h2>🔢 Math Sprint</h2>
+      <div class="score-display">
+        Score: <span id="math-score">0</span> &nbsp;|&nbsp; Q <span id="math-qnum">1</span>/10
+      </div>
+    </div>
+
+    <div id="math-box" class="game-box">
+      <div id="math-question" class="big-text">Loading…</div>
+      <input type="number" id="math-input" class="answer-input"
+             placeholder="Enter your answer"
+             onkeydown="if(event.key==='Enter') checkMathAnswer()">
+      <button class="btn btn-primary" onclick="checkMathAnswer()">Submit</button>
+      <div id="math-feedback" class="feedback"></div>
+    </div>
+
+    <div id="math-result" class="result-msg hidden"></div>
+    <button class="btn btn-outline hidden" id="math-restart" onclick="initMath()">🔄 Play Again</button>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       3. QUICK QUIZ
+  ══════════════════════════════════════════ -->
+  <div id="quiz-game" class="container hidden">
+
+    <div class="game-header">
+      <button class="back-btn" onclick="showMenu()">← Back</button>
+      <h2>❓ Quick Quiz</h2>
+      <div class="score-display">
+        Score: <span id="quiz-score">0</span> &nbsp;|&nbsp; Q <span id="quiz-qnum">1</span>/8
+      </div>
+    </div>
+
+    <div id="quiz-box" class="game-box">
+      <div id="quiz-question" class="quiz-question">Loading…</div>
+      <div id="quiz-options" class="quiz-options"></div>
+      <button class="btn btn-outline" id="next-btn"
+              onclick="nextQuizQuestion()" style="display:none">Next →</button>
+    </div>
+
+    <div id="quiz-result" class="result-msg hidden"></div>
+    <button class="btn btn-outline hidden" id="quiz-restart" onclick="initQuiz()">🔄 Play Again</button>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       4. WORD PUZZLE
+  ══════════════════════════════════════════ -->
+  <div id="word-game" class="container hidden">
+
+    <div class="game-header">
+      <button class="back-btn" onclick="showMenu()">← Back</button>
+      <h2>📝 Word Puzzle</h2>
+      <div class="score-display">
+        Score: <span id="word-score">0</span> &nbsp;|&nbsp; W <span id="word-num">1</span>/8
+      </div>
+    </div>
+
+    <div id="word-box" class="game-box">
+      <p class="hint-label">Hint: <span id="word-hint" class="hint-text">–</span></p>
+      <div id="scrambled-word" class="big-text scrambled">– – – – –</div>
+      <input type="text" id="word-input" class="answer-input"
+             placeholder="Type the word…"
+             onkeydown="if(event.key==='Enter') checkWordAnswer()">
+      <button class="btn btn-primary" onclick="checkWordAnswer()">Check Answer</button>
+      <div id="word-feedback" class="feedback"></div>
+    </div>
+
+    <div id="word-result" class="result-msg hidden"></div>
+    <button class="btn btn-outline hidden" id="word-restart" onclick="initWord()">🔄 Play Again</button>
+
+  </div>
+
+  <script src="games.js"></script>
+</body>
+</html>
